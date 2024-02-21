@@ -26,10 +26,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.10"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "bundler", "~> 2.5"
+  spec.add_development_dependency "rake", "~> 13.0"
 
-  spec.add_dependency "methadone"
-  spec.add_dependency "aws-sdk", "~> 2.0"
+  spec.add_dependency "aws-sdk-ec2", "~> 1.438"
+  spec.add_dependency "nokogiri"
+  spec.add_dependency "optparse-plus"
 
 end

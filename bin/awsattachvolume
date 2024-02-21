@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 
-require 'methadone'
+require 'optparse-plus'
 require 'AWSAttachVolume'
 
 class App
-  include Methadone::Main
-  include Methadone::CLILogging
-  include Methadone::ExitNow
+  include OptparsePlus::Main
+  include OptparsePlus::CLILogging
+  include OptparsePlus::ExitNow
 
   def self.validate_opts
     if options[:volume_id] && options[:tags]
