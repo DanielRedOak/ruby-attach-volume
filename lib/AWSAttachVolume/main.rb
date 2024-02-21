@@ -1,15 +1,14 @@
-require 'aws-sdk'
+require 'aws-sdk-ec2'
 require 'net/http'
 
 module AWSAttachVolume
   class Main
-    include Methadone::CLILogging
-    include Methadone::ExitNow
+    include OptparsePlus::CLILogging
+    include OptparsePlus::ExitNow
 
     def initialize(options={})
       client= Aws::EC2::Client.new(region: options[:region])
       @resource = Aws::EC2::Resource.new(client: client)
-      @volume = @resource.volume(options[:volume_id])
       @instance_id = options[:instance_id]
       @device = options[:device]
       @move = options[:move]
@@ -19,13 +18,16 @@ module AWSAttachVolume
         @instance_id = instance_id
       end
 
+      if @tags
+        find_by_tags
+      else
+        @volume = @resource.volume(options[:volume_id])
+      end
+
       @instance_az = instance_az
     end
 
     def run()
-      if @tags
-        find_by_tags
-      end
       need_move = true if @volume.availability_zone != @instance_az
 
       unless @volume.state == 'available'
